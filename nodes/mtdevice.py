@@ -509,13 +509,13 @@ class MTDevice(object):
 						o['ecefX'], o['ecefY'], o['ecefZ'], o['pAcc'], \
 						o['ecefVX'], o['ecefVY'], o['ecefVZ'], o['sAcc'], \
 						o['pDOP'], o['numSV'] = \
-						struct.unpack('!LlhBBlllLlllLHxBx', content)
+						struct.unpack('!LlhBBlllLlllLHxBx', content[:49])
 			elif (data_id&0x00F0) == 0x80:	# Time UTC
 				o['iTOW'], o['tAcc'], o['nano'], o['year'], o['month'], \
 						o['day'], o['hour'], o['min'], o['sec'], o['valid'] = \
 						struct.unpack('!LLlHBBBBBB', content)
 			elif (data_id&0x00F0) == 0xA0:	# SV Info
-				o['iTOW'], o['numCh'] = struct.unpack('!LBxx', content[:8])
+				o['iTOW'], o['numCh'] = struct.unpack('!LBxxx', content[:8])
 				channels = []
 				ch = {}
 				for i in range(o['numCh']):
